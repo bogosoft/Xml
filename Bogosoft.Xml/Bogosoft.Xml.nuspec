@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+	<metadata>
+		<authors>Clayton Roth</authors>
+		<description>Extended functionality for System.Xml types and XML formatting.</description>
+		<id>Bogosoft.Xml</id>
+		<requireLicenseAcceptance>false</requireLicenseAcceptance>
+		<version>1.0.0</version>
+	</metadata>
+</package>

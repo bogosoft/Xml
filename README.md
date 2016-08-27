@@ -1,2 +1,3 @@
 # Xml
-XML-related functionality.
+* Extended functionality for types within the `System.Xml` namespace.
+* Types which facilitate XML formatting.
