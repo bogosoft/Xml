@@ -42,8 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FormatterExtensions.cs" />
-    <Compile Include="IFormat.cs" />
+    <Compile Include="XmlFormatterExtensions.cs" />
     <Compile Include="IXmlSerialize.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TextWriterExtensions.cs" />
