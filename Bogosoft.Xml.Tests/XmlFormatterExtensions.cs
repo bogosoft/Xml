@@ -5,7 +5,7 @@ using System.Xml;
 
 namespace Bogosoft.Xml.Tests
 {
-    internal static class FormatterExtensions
+    internal static class XmlFormatterExtensions
     {
         internal static async Task<String> ToStringAsync(this XmlFormatter formatter, XmlNode node)
         {

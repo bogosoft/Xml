@@ -6,7 +6,7 @@ using System.Xml;
 namespace Bogosoft.Xml.Tests
 {
     [TestFixture]
-    public class XmlFormatterTests
+    public class UnitTests
     {
         [TestCase]
         public async Task CanFormatXmlDocument()
