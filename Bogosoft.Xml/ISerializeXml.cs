@@ -5,7 +5,7 @@ namespace Bogosoft.Xml
     /// <summary>
     /// Indicates that a type has the ability to serialize itself to an <see cref="XmlNode"/>.
     /// </summary>
-    public interface IXmlSerializable
+    public interface ISerializeXml
     {
         /// <summary>
         /// Serialize the current instance to an <see cref="XmlNode"/>.
