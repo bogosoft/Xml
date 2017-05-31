@@ -2,7 +2,6 @@
 using System.IO;
 using System.Threading.Tasks;
 using System.Xml;
-using System.Xml.Serialization;
 
 namespace Bogosoft.Xml
 {
@@ -21,7 +20,7 @@ namespace Bogosoft.Xml
             String indent = ""
             )
         {
-            Task.Run(async () => await formatter.FormatAsync(node, writer, indent)).Wait();
+            Task.Run(async () => await formatter.FormatAsync(node, writer)).Wait();
         }
 
         /// <summary>Format an <see cref="System.Xml.Serialization.IXmlSerializable"/> to a <see cref="TextWriter"/>.</summary>
@@ -68,7 +67,7 @@ namespace Bogosoft.Xml
                 }
             }
 
-            await formatter.FormatAsync(document, writer, indent);
+            await formatter.FormatAsync(document, writer);
         }
     }
 }

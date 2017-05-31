@@ -17,35 +17,10 @@ namespace Bogosoft.Xml
         /// <summary>Format an <see cref="XmlNode"/> to a <see cref="TextWriter"/>.</summary>
         /// <param name="node">A node to format.</param>
         /// <param name="writer">A target <see cref="TextWriter"/> to format to.</param>
-        /// <param name="indent">An optional identation.</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
-        public Task FormatAsync(XmlNode node, TextWriter writer, String indent = "")
+        public Task FormatAsync(XmlNode node, TextWriter writer)
         {
-            switch (node.NodeType)
-            {
-                case XmlNodeType.Attribute:
-                    return FormatAttributeAsync(node as XmlAttribute, writer, indent);
-                case XmlNodeType.CDATA:
-                    return FormatCDataSectionAsync(node as XmlCDataSection, writer);
-                case XmlNodeType.Comment:
-                    return FormatCommentAsync(node as XmlComment, writer);
-                case XmlNodeType.Document:
-                    return FormatDocumentAsync(node as XmlDocument, writer, indent);
-                case XmlNodeType.DocumentFragment:
-                    return FormatDocumentFragmentAsync(node as XmlDocumentFragment, writer, indent);
-                case XmlNodeType.DocumentType:
-                    return FormatDocumentTypeAsync(node as XmlDocumentType, writer);
-                case XmlNodeType.Element:
-                    return FormatElementAsync(node as XmlElement, writer, indent);
-                case XmlNodeType.ProcessingInstruction:
-                    return FormatProcessingInstructionAsync(node as XmlProcessingInstruction, writer, indent);
-                case XmlNodeType.Text:
-                    return FormatTextAsync(node as XmlText, writer);
-                case XmlNodeType.XmlDeclaration:
-                    return FormatXmlDeclarationAsync(node as XmlDeclaration, writer);
-                default:
-                    return writer.WriteAsync(node.OuterXml);
-            }
+            return FormatNodeAsync(node, writer, "");
         }
 
         /// <summary>
@@ -101,7 +76,7 @@ namespace Bogosoft.Xml
         {
             foreach(XmlNode n in document.ChildNodes)
             {
-                await FormatAsync(n, writer, indent);
+                await FormatNodeAsync(n, writer, indent);
             }
         }
 
@@ -120,7 +95,7 @@ namespace Bogosoft.Xml
         {
             foreach(XmlNode n in fragment.ChildNodes)
             {
-                await FormatAsync(n, writer, indent);
+                await FormatNodeAsync(n, writer, indent);
             }
         }
 
@@ -166,7 +141,7 @@ namespace Bogosoft.Xml
 
                 foreach(XmlNode n in element.ChildNodes)
                 {
-                    await FormatAsync(n, writer, indent + Indent);
+                    await FormatNodeAsync(n, writer, indent + Indent);
 
                     if(n.NodeType == XmlNodeType.Element)
                     {
@@ -184,6 +159,44 @@ namespace Bogosoft.Xml
             else
             {
                 await writer.WriteAsync("/>");
+            }
+        }
+
+        /// <summary>Format an <see cref="XmlNode"/> to a <see cref="TextWriter"/>.</summary>
+        /// <param name="node">A node to format.</param>
+        /// <param name="writer">A target <see cref="TextWriter"/> to format to.</param>
+        /// <param name="indent">An optional identation.</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        protected virtual Task FormatNodeAsync(
+            XmlNode node,
+            TextWriter writer,
+            String indent
+            )
+        {
+            switch (node.NodeType)
+            {
+                case XmlNodeType.Attribute:
+                    return FormatAttributeAsync(node as XmlAttribute, writer, indent);
+                case XmlNodeType.CDATA:
+                    return FormatCDataSectionAsync(node as XmlCDataSection, writer);
+                case XmlNodeType.Comment:
+                    return FormatCommentAsync(node as XmlComment, writer);
+                case XmlNodeType.Document:
+                    return FormatDocumentAsync(node as XmlDocument, writer, indent);
+                case XmlNodeType.DocumentFragment:
+                    return FormatDocumentFragmentAsync(node as XmlDocumentFragment, writer, indent);
+                case XmlNodeType.DocumentType:
+                    return FormatDocumentTypeAsync(node as XmlDocumentType, writer);
+                case XmlNodeType.Element:
+                    return FormatElementAsync(node as XmlElement, writer, indent);
+                case XmlNodeType.ProcessingInstruction:
+                    return FormatProcessingInstructionAsync(node as XmlProcessingInstruction, writer, indent);
+                case XmlNodeType.Text:
+                    return FormatTextAsync(node as XmlText, writer);
+                case XmlNodeType.XmlDeclaration:
+                    return FormatXmlDeclarationAsync(node as XmlDeclaration, writer);
+                default:
+                    return writer.WriteAsync(node.OuterXml);
             }
         }
 
