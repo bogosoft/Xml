@@ -19,43 +19,32 @@ namespace Bogosoft.Xml
         /// <param name="writer">A target <see cref="TextWriter"/> to format to.</param>
         /// <param name="indent">An optional identation.</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
-        public async Task FormatAsync(XmlNode node, TextWriter writer, String indent = "")
+        public Task FormatAsync(XmlNode node, TextWriter writer, String indent = "")
         {
             switch (node.NodeType)
             {
                 case XmlNodeType.Attribute:
-                    await this.FormatAttributeAsync(node as XmlAttribute, writer, indent);
-                    break;
+                    return FormatAttributeAsync(node as XmlAttribute, writer, indent);
                 case XmlNodeType.CDATA:
-                    await this.FormatCDataSectionAsync(node as XmlCDataSection, writer);
-                    break;
+                    return FormatCDataSectionAsync(node as XmlCDataSection, writer);
                 case XmlNodeType.Comment:
-                    await this.FormatCommentAsync(node as XmlComment, writer);
-                    break;
+                    return FormatCommentAsync(node as XmlComment, writer);
                 case XmlNodeType.Document:
-                    await this.FormatDocumentAsync(node as XmlDocument, writer, indent);
-                    break;
+                    return FormatDocumentAsync(node as XmlDocument, writer, indent);
                 case XmlNodeType.DocumentFragment:
-                    await this.FormatDocumentFragmentAsync(node as XmlDocumentFragment, writer, indent);
-                    break;
+                    return FormatDocumentFragmentAsync(node as XmlDocumentFragment, writer, indent);
                 case XmlNodeType.DocumentType:
-                    await this.FormatDocumentTypeAsync(node as XmlDocumentType, writer);
-                    break;
+                    return FormatDocumentTypeAsync(node as XmlDocumentType, writer);
                 case XmlNodeType.Element:
-                    await this.FormatElementAsync(node as XmlElement, writer, indent);
-                    break;
+                    return FormatElementAsync(node as XmlElement, writer, indent);
                 case XmlNodeType.ProcessingInstruction:
-                    await this.FormatProcessingInstructionAsync(node as XmlProcessingInstruction, writer, indent);
-                    break;
+                    return FormatProcessingInstructionAsync(node as XmlProcessingInstruction, writer, indent);
                 case XmlNodeType.Text:
-                    await this.FormatTextAsync(node as XmlText, writer);
-                    break;
+                    return FormatTextAsync(node as XmlText, writer);
                 case XmlNodeType.XmlDeclaration:
-                    await this.FormatXmlDeclarationAsync(node as XmlDeclaration, writer);
-                    break;
+                    return FormatXmlDeclarationAsync(node as XmlDeclaration, writer);
                 default:
-                    await writer.WriteAsync(node.OuterXml);
-                    break;
+                    return writer.WriteAsync(node.OuterXml);
             }
         }
 
@@ -66,13 +55,13 @@ namespace Bogosoft.Xml
         /// <param name="writer">A target <see cref="TextWriter"/> to format to.</param>
         /// <param name="indent">An <see cref="String"/> representing the current indentation.</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
-        protected virtual async Task FormatAttributeAsync(
+        protected virtual Task FormatAttributeAsync(
             XmlAttribute attribute,
             TextWriter writer,
             String indent
             )
         {
-            await writer.WriteAsync(" " + attribute.Name + "=\"" + attribute.Value + "\"");
+            return writer.WriteAsync(" " + attribute.Name + "=\"" + attribute.Value + "\"");
         }
 
         /// <summary>
@@ -81,9 +70,9 @@ namespace Bogosoft.Xml
         /// <param name="cdata">An <see cref="XmlCDataSection"/> to format.</param>
         /// <param name="writer">A target <see cref="TextWriter"/> to format to.</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
-        protected virtual async Task FormatCDataSectionAsync(XmlCDataSection cdata, TextWriter writer)
+        protected virtual Task FormatCDataSectionAsync(XmlCDataSection cdata, TextWriter writer)
         {
-            await writer.WriteAsync("<![CDATA[" + cdata.Data + "]]>");
+            return writer.WriteAsync(cdata.OuterXml);
         }
 
         /// <summary>
@@ -92,9 +81,9 @@ namespace Bogosoft.Xml
         /// <param name="comment">An <see cref="XmlComment"/> to format.</param>
         /// <param name="writer">A target <see cref="TextWriter"/> to format to.</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
-        protected virtual async Task FormatCommentAsync(XmlComment comment, TextWriter writer)
+        protected virtual Task FormatCommentAsync(XmlComment comment, TextWriter writer)
         {
-            await writer.WriteAsync("<!--" + comment.Data + "-->");
+            return writer.WriteAsync(comment.OuterXml);
         }
 
         /// <summary>
@@ -112,7 +101,7 @@ namespace Bogosoft.Xml
         {
             foreach(XmlNode n in document.ChildNodes)
             {
-                await this.FormatAsync(n, writer, indent);
+                await FormatAsync(n, writer, indent);
             }
         }
 
@@ -131,7 +120,7 @@ namespace Bogosoft.Xml
         {
             foreach(XmlNode n in fragment.ChildNodes)
             {
-                await this.FormatAsync(n, writer, indent);
+                await FormatAsync(n, writer, indent);
             }
         }
 
@@ -141,12 +130,12 @@ namespace Bogosoft.Xml
         /// <param name="doctype">An <see cref="XmlDocumentType"/> to format.</param>
         /// <param name="writer">A target <see cref="TextWriter"/> to format to.</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
-        protected virtual async Task FormatDocumentTypeAsync(
+        protected virtual Task FormatDocumentTypeAsync(
             XmlDocumentType doctype,
             TextWriter writer
             )
         {
-            await writer.WriteAsync(doctype.OuterXml);
+            return writer.WriteAsync(doctype.OuterXml);
         }
 
         /// <summary>
@@ -162,11 +151,11 @@ namespace Bogosoft.Xml
             String indent
             )
         {
-            await writer.WriteAsync(this.LBreak + indent + "<" + element.Name);
+            await writer.WriteAsync(LBreak + indent + "<" + element.Name);
 
             foreach(XmlAttribute a in element.Attributes)
             {
-                await this.FormatAttributeAsync(a, writer, indent);
+                await FormatAttributeAsync(a, writer, indent);
             }
 
             if (element.HasChildNodes)
@@ -177,7 +166,7 @@ namespace Bogosoft.Xml
 
                 foreach(XmlNode n in element.ChildNodes)
                 {
-                    await this.FormatAsync(n, writer, indent + this.Indent);
+                    await FormatAsync(n, writer, indent + Indent);
 
                     if(n.NodeType == XmlNodeType.Element)
                     {
@@ -187,7 +176,7 @@ namespace Bogosoft.Xml
 
                 if(ecount > 0)
                 {
-                    await writer.WriteAsync(this.LBreak + indent);
+                    await writer.WriteAsync(LBreak + indent);
                 }
 
                 await writer.WriteAsync("</" + element.Name + ">");
@@ -205,13 +194,13 @@ namespace Bogosoft.Xml
         /// <param name="writer">A target <see cref="TextWriter"/> to format to.</param>
         /// <param name="indent">An <see cref="String"/> representing the current indentation.</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
-        protected virtual async Task FormatProcessingInstructionAsync(
+        protected virtual Task FormatProcessingInstructionAsync(
             XmlProcessingInstruction pi,
             TextWriter writer,
             String indent
             )
         {
-            await writer.WriteAsync(pi.OuterXml);
+            return writer.WriteAsync(pi.OuterXml);
         }
 
         /// <summary>
@@ -220,9 +209,9 @@ namespace Bogosoft.Xml
         /// <param name="text">An <see cref="XmlText"/> to format.</param>
         /// <param name="writer">A target <see cref="TextWriter"/> to format to.</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
-        protected virtual async Task FormatTextAsync(XmlText text, TextWriter writer)
+        protected virtual Task FormatTextAsync(XmlText text, TextWriter writer)
         {
-            await writer.WriteAsync(text.Data);
+            return writer.WriteAsync(text.Data);
         }
 
         /// <summary>
@@ -231,9 +220,9 @@ namespace Bogosoft.Xml
         /// <param name="declaration">An <see cref="XmlDeclaration"/> to format.</param>
         /// <param name="writer">A target <see cref="TextWriter"/> to format to.</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
-        protected virtual async Task FormatXmlDeclarationAsync(XmlDeclaration declaration, TextWriter writer)
+        protected virtual Task FormatXmlDeclarationAsync(XmlDeclaration declaration, TextWriter writer)
         {
-            await writer.WriteAsync(declaration.OuterXml);
+            return writer.WriteAsync(declaration.OuterXml);
         }
     }
 }
