@@ -5,10 +5,10 @@ using System.Xml;
 
 namespace Bogosoft.Xml
 {
-    /// <summary>Extensions for the <see cref="StandardXmlFormatter"/> contract.</summary>
+    /// <summary>Extensions for the <see cref="IFormatXml"/> contract.</summary>
     public static class XmlFormatterExtensions
     {
-        /// <summary>Format an <see cref="XmlNode"/> to a <see cref="TextWriter"/>.</summary>
+        /// <summary>Synchronously format an <see cref="XmlNode"/> to a <see cref="TextWriter"/>.</summary>
         /// <param name="formatter">The current <see cref="IFormatXml"/> implementation.</param>
         /// <param name="node">A node to format.</param>
         /// <param name="writer">A target <see cref="TextWriter"/> to format to.</param>
@@ -67,6 +67,26 @@ namespace Bogosoft.Xml
             }
 
             await formatter.FormatAsync(document, writer, token);
+        }
+
+        /// <summary>
+        /// Format a given <see cref="XmlNode"/> to a given <see cref="TextWriter"/>. Calling this method is
+        /// equivalent to calling <see cref="IFormatXml.FormatAsync(XmlNode, TextWriter, CancellationToken)"/>
+        /// with a value of <see cref="CancellationToken.None"/>.
+        /// </summary>
+        /// <param name="formatter">The current <see cref="IFormatXml"/> implementation.</param>
+        /// <param name="node">A node to format.</param>
+        /// <param name="writer">A target <see cref="TextWriter"/> to format to.</param>
+        /// <returns>
+        /// A <see cref="Task"/> representing the asynchronous operation.
+        /// </returns>
+        public static Task FormatAsync(
+            this IFormatXml formatter,
+            XmlNode node,
+            TextWriter writer
+            )
+        {
+            return formatter.FormatAsync(node, writer, CancellationToken.None);
         }
     }
 }
