@@ -7,7 +7,7 @@ namespace Bogosoft.Xml.Tests
 {
     internal static class XmlFormatterExtensions
     {
-        internal static async Task<String> ToStringAsync(this XmlFormatter formatter, XmlNode node)
+        internal static async Task<String> ToStringAsync(this StandardXmlFormatter formatter, XmlNode node)
         {
             using (var writer = new StringWriter())
             {

@@ -49,7 +49,7 @@
     <Compile Include="TextWriterExtensions.cs" />
     <Compile Include="XmlDocumentExtensions.cs" />
     <Compile Include="XmlElementExtensions.cs" />
-    <Compile Include="XmlFormatter.cs" />
+    <Compile Include="StandardXmlFormatter.cs" />
     <Compile Include="XmlNodeExtensions.cs" />
     <Compile Include="XmlSerializerExtensions.cs" />
   </ItemGroup>

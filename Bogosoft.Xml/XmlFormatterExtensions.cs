@@ -6,16 +6,16 @@ using System.Xml.Serialization;
 
 namespace Bogosoft.Xml
 {
-    /// <summary>Extensions for the <see cref="XmlFormatter"/> contract.</summary>
+    /// <summary>Extensions for the <see cref="StandardXmlFormatter"/> contract.</summary>
     public static class XmlFormatterExtensions
     {
         /// <summary>Format an <see cref="XmlNode"/> to a <see cref="TextWriter"/>.</summary>
-        /// <param name="formatter">The current <see cref="XmlFormatter"/> object.</param>
+        /// <param name="formatter">The current <see cref="StandardXmlFormatter"/> object.</param>
         /// <param name="node">A node to format.</param>
         /// <param name="writer">A target <see cref="TextWriter"/> to format to.</param>
         /// <param name="indent">An optional identation.</param>
         public static void Format(
-            this XmlFormatter formatter,
+            this StandardXmlFormatter formatter,
             XmlNode node,
             TextWriter writer,
             String indent = ""
@@ -25,12 +25,12 @@ namespace Bogosoft.Xml
         }
 
         /// <summary>Format an <see cref="System.Xml.Serialization.IXmlSerializable"/> to a <see cref="TextWriter"/>.</summary>
-        /// <param name="formatter">The current <see cref="XmlFormatter"/> object.</param>
+        /// <param name="formatter">The current <see cref="StandardXmlFormatter"/> object.</param>
         /// <param name="serializable">An XML-serializable object.</param>
         /// <param name="writer">A target <see cref="TextWriter"/> to format to.</param>
         /// <param name="indent">An optional identation.</param>
         public static void Format(
-            this XmlFormatter formatter,
+            this StandardXmlFormatter formatter,
             System.Xml.Serialization.IXmlSerializable serializable,
             TextWriter writer,
             String indent = ""
@@ -42,13 +42,13 @@ namespace Bogosoft.Xml
         /// <summary>
         /// Format an <see cref="System.Xml.Serialization.IXmlSerializable"/> to a <see cref="TextWriter"/>.  
         /// </summary>
-        /// <param name="formatter">The current <see cref="XmlFormatter"/> object.</param>
+        /// <param name="formatter">The current <see cref="StandardXmlFormatter"/> object.</param>
         /// <param name="serializable">An XML-serializable object.</param>
         /// <param name="writer">A target <see cref="TextWriter"/> to format to.</param>
         /// <param name="indent">An optional indentation.</param>
         /// <returns>A <see cref="Task"/> representing a possibly asynchronous operation.</returns>
         public static async Task FormatAsync(
-            this XmlFormatter formatter,
+            this StandardXmlFormatter formatter,
             System.Xml.Serialization.IXmlSerializable serializable,
             TextWriter writer,
             String indent = ""

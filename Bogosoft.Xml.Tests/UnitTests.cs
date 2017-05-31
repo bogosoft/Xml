@@ -17,7 +17,7 @@ namespace Bogosoft.Xml.Tests
 
             root.SetAttribute("say", "Hello, World!");
 
-            var formatted = await new XmlFormatter().ToStringAsync(document);
+            var formatted = await new StandardXmlFormatter().ToStringAsync(document);
 
             formatted.ShouldEqual("<test say=\"Hello, World!\"/>");
         }
