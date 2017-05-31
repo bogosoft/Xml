@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
@@ -22,49 +21,52 @@ namespace Bogosoft.Xml
             formatter.FormatAsync(node, writer, CancellationToken.None).GetAwaiter().GetResult();
         }
 
-        /// <summary>Format an <see cref="System.Xml.Serialization.IXmlSerializable"/> to a <see cref="TextWriter"/>.</summary>
-        /// <param name="formatter">The current <see cref="StandardXmlFormatter"/> object.</param>
+        /// <summary>
+        /// Synchronously ormat an <see cref="System.Xml.Serialization.IXmlSerializable"/>
+        /// to a <see cref="TextWriter"/>.
+        /// </summary>
+        /// <param name="formatter">The current <see cref="IFormatXml"/> implementation.</param>
         /// <param name="serializable">An XML-serializable object.</param>
         /// <param name="writer">A target <see cref="TextWriter"/> to format to.</param>
-        //public static void Format(
-        //    this StandardXmlFormatter formatter,
-        //    System.Xml.Serialization.IXmlSerializable serializable,
-        //    TextWriter writer
-        //    )
-        //{
-        //    Task.Run(async () => await formatter.FormatAsync(serializable, writer, CancellationToken.None)).Wait();
-        //}
+        public static void Format(
+            this IFormatXml formatter,
+            System.Xml.Serialization.IXmlSerializable serializable,
+            TextWriter writer
+            )
+        {
+            formatter.FormatAsync(serializable, writer, CancellationToken.None).GetAwaiter().GetResult();
+        }
 
         /// <summary>
         /// Format an <see cref="System.Xml.Serialization.IXmlSerializable"/> to a <see cref="TextWriter"/>.  
         /// </summary>
-        /// <param name="formatter">The current <see cref="StandardXmlFormatter"/> object.</param>
+        /// <param name="formatter">The current <see cref="IFormatXml"/> implementation.</param>
         /// <param name="serializable">An XML-serializable object.</param>
         /// <param name="writer">A target <see cref="TextWriter"/> to format to.</param>
-        /// <param name="indent">An optional indentation.</param>
+        /// <param name="token">A <see cref="CancellationToken"/> object.</param>
         /// <returns>A <see cref="Task"/> representing a possibly asynchronous operation.</returns>
-        //public static async Task FormatAsync(
-        //    this StandardXmlFormatter formatter,
-        //    System.Xml.Serialization.IXmlSerializable serializable,
-        //    TextWriter writer,
-        //    String indent = ""
-        //    )
-        //{
-        //    var document = new XmlDocument();
+        public static async Task FormatAsync(
+            this IFormatXml formatter,
+            System.Xml.Serialization.IXmlSerializable serializable,
+            TextWriter writer,
+            CancellationToken token
+            )
+        {
+            var document = new XmlDocument();
 
-        //    using (var stream = new MemoryStream())
-        //    {
-        //        using (var xmlWriter = XmlWriter.Create(stream))
-        //        {
-        //            serializable.WriteXml(xmlWriter);
+            using (var stream = new MemoryStream())
+            {
+                using (var xmlWriter = XmlWriter.Create(stream))
+                {
+                    serializable.WriteXml(xmlWriter);
 
-        //            stream.Position = 0;
+                    stream.Position = 0;
 
-        //            document.Load(stream);
-        //        }
-        //    }
+                    document.Load(stream);
+                }
+            }
 
-        //    await formatter.FormatAsync(document, writer);
-        //}
+            await formatter.FormatAsync(document, writer, token);
+        }
     }
 }
