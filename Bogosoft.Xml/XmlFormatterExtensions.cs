@@ -10,16 +10,16 @@ namespace Bogosoft.Xml
     public static class XmlFormatterExtensions
     {
         /// <summary>Format an <see cref="XmlNode"/> to a <see cref="TextWriter"/>.</summary>
-        /// <param name="formatter">The current <see cref="StandardXmlFormatter"/> object.</param>
+        /// <param name="formatter">The current <see cref="IFormatXml"/> implementation.</param>
         /// <param name="node">A node to format.</param>
         /// <param name="writer">A target <see cref="TextWriter"/> to format to.</param>
         public static void Format(
-            this StandardXmlFormatter formatter,
+            this IFormatXml formatter,
             XmlNode node,
             TextWriter writer
             )
         {
-            Task.Run(async () => await formatter.FormatAsync(node, writer, CancellationToken.None)).Wait();
+            formatter.FormatAsync(node, writer, CancellationToken.None).GetAwaiter().GetResult();
         }
 
         /// <summary>Format an <see cref="System.Xml.Serialization.IXmlSerializable"/> to a <see cref="TextWriter"/>.</summary>
