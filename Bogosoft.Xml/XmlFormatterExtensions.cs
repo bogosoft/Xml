@@ -24,14 +24,14 @@ namespace Bogosoft.Xml
             Task.Run(async () => await formatter.FormatAsync(node, writer, indent)).Wait();
         }
 
-        /// <summary>Format an <see cref="IXmlSerializable"/> to a <see cref="TextWriter"/>.</summary>
+        /// <summary>Format an <see cref="System.Xml.Serialization.IXmlSerializable"/> to a <see cref="TextWriter"/>.</summary>
         /// <param name="formatter">The current <see cref="XmlFormatter"/> object.</param>
         /// <param name="serializable">An XML-serializable object.</param>
         /// <param name="writer">A target <see cref="TextWriter"/> to format to.</param>
         /// <param name="indent">An optional identation.</param>
         public static void Format(
             this XmlFormatter formatter,
-            IXmlSerializable serializable,
+            System.Xml.Serialization.IXmlSerializable serializable,
             TextWriter writer,
             String indent = ""
             )
@@ -40,7 +40,7 @@ namespace Bogosoft.Xml
         }
 
         /// <summary>
-        /// Format an <see cref="IXmlSerializable"/> to a <see cref="TextWriter"/>.  
+        /// Format an <see cref="System.Xml.Serialization.IXmlSerializable"/> to a <see cref="TextWriter"/>.  
         /// </summary>
         /// <param name="formatter">The current <see cref="XmlFormatter"/> object.</param>
         /// <param name="serializable">An XML-serializable object.</param>
@@ -49,7 +49,7 @@ namespace Bogosoft.Xml
         /// <returns>A <see cref="Task"/> representing a possibly asynchronous operation.</returns>
         public static async Task FormatAsync(
             this XmlFormatter formatter,
-            IXmlSerializable serializable,
+            System.Xml.Serialization.IXmlSerializable serializable,
             TextWriter writer,
             String indent = ""
             )
