@@ -1,4 +1,5 @@
 ﻿using System.Xml;
+using System.Xml.XPath;
 
 namespace Bogosoft.Xml
 {
@@ -11,8 +12,10 @@ namespace Bogosoft.Xml
         /// Serialize the current instance to an <see cref="XmlDocument"/>.
         /// </summary>
         /// <param name="serializable">The current <see cref="IXmlSerialize"/> implementation.</param>
-        /// <returns>A serialized <see cref="XmlDocument"/>.</returns>
-        public static XmlDocument Serialize(this IXmlSerialize serializable)
+        /// <returns>
+        /// An XPath-navigable object.
+        /// </returns>
+        public static IXPathNavigable Serialize(this IXmlSerialize serializable)
         {
             var document = new XmlDocument();
 
