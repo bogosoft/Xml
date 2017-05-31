@@ -15,7 +15,7 @@ namespace Bogosoft.Xml
         /// <returns>
         /// An XPath-navigable object.
         /// </returns>
-        public static IXPathNavigable Serialize(this IXmlSerializable serializable)
+        public static XmlDocument Serialize(this IXmlSerializable serializable)
         {
             var document = new XmlDocument();
 
