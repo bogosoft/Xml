@@ -7,7 +7,7 @@ using System.Xml;
 namespace Bogosoft.Xml
 {
     /// <summary>A standard XML formatter.</summary>
-    public class StandardXmlFormatter
+    public class StandardXmlFormatter : IFormatXml
     {
         /// <summary>Get or set the base indentation to be used during formatting.</summary>
         public String Indent = "";
