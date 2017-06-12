@@ -1,19 +1,18 @@
 ﻿using System.Xml;
-using System.Xml.XPath;
 
 namespace Bogosoft.Xml
 {
     /// <summary>
     /// Extended functionality for the <see cref="IXmlSerializable"/> contract.
     /// </summary>
-    public static class XmlSerializerExtensions
+    public static class XmlSerializableExtensions
     {
         /// <summary>
-        /// Serialize the current instance to an <see cref="XmlDocument"/>.
+        /// Serialize the current instance to an XML document.
         /// </summary>
         /// <param name="serializable">The current <see cref="IXmlSerializable"/> implementation.</param>
         /// <returns>
-        /// An XPath-navigable object.
+        /// An XML document.
         /// </returns>
         public static XmlDocument Serialize(this IXmlSerializable serializable)
         {

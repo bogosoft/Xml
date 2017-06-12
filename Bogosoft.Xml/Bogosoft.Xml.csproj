@@ -52,7 +52,7 @@
     <Compile Include="XmlElementExtensions.cs" />
     <Compile Include="StandardXmlFormatter.cs" />
     <Compile Include="XmlNodeExtensions.cs" />
-    <Compile Include="XmlSerializerExtensions.cs" />
+    <Compile Include="XmlSerializableExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Bogosoft.Xml.nuspec" />
