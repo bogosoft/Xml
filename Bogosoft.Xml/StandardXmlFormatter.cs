@@ -40,7 +40,7 @@ namespace Bogosoft.Xml
             CancellationToken token
             )
         {
-            return writer.WriteAsync(" " + attribute.Name + "=\"" + attribute.Value.Replace("&", "&amp;") + "\"", token);
+            return writer.WriteAsync(" " + attribute.Name + "=\"" + attribute.Value + "\"", token);
         }
 
         /// <summary>
@@ -243,7 +243,7 @@ namespace Bogosoft.Xml
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         protected virtual Task FormatTextAsync(XmlText text, TextWriter writer, CancellationToken token)
         {
-            return writer.WriteAsync(text.Data.Replace("&", "&amp;"), token);
+            return writer.WriteAsync(text.Data, token);
         }
 
         /// <summary>
