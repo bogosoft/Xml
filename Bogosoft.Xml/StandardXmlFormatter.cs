@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
@@ -9,6 +11,11 @@ namespace Bogosoft.Xml
     /// <summary>A standard XML formatter.</summary>
     public class StandardXmlFormatter : IFormatXml
     {
+        /// <summary>
+        /// Get or set an array of filters to be applied to the document node prior to formatting.
+        /// </summary>
+        protected AsyncFilter[] Filters;
+
         /// <summary>Get or set the base indentation to be used during formatting.</summary>
         public String Indent = "";
 
@@ -84,9 +91,14 @@ namespace Bogosoft.Xml
             CancellationToken token
             )
         {
-            foreach(XmlNode n in document.ChildNodes)
+            foreach(var filter in (Filters ?? new AsyncFilter[0]))
             {
-                await FormatNodeAsync(n, writer, "", token);
+                await filter.Invoke(document, token);
+            }
+
+            foreach (XmlNode child in document.ChildNodes)
+            {
+                await FormatNodeAsync(child, writer, "", token);
             }
         }
 
@@ -260,6 +272,44 @@ namespace Bogosoft.Xml
             )
         {
             return writer.WriteAsync(declaration.OuterXml, token);
+        }
+
+        /// <summary>
+        /// Instruct the current formatter to apply the given filter to an XML document prior to formatting.
+        /// </summary>
+        /// <param name="filter">A filter strategy.</param>
+        protected void With(AsyncFilter filter)
+        {
+            Filters = new AsyncFilter[] { filter };
+        }
+
+        /// <summary>
+        /// Instruct the current formatter to apply a given sequence of filters
+        /// to an XML document prior to formatting.
+        /// </summary>
+        /// <param name="filters">A sequence of filter strategies.</param>
+        protected void With(IEnumerable<AsyncFilter> filters)
+        {
+            Filters = filters.ToArray();
+        }
+
+        /// <summary>
+        /// Instruct the current formatter to apply a given sequence of filters
+        /// to an XML document prior to formatting.
+        /// </summary>
+        /// <param name="filters">A sequence of filter strategies.</param>
+        protected void With(IEnumerable<IFilter> filters)
+        {
+            Filters = filters.Select<IFilter, AsyncFilter>(x => x.FilterAsync).ToArray();
+        }
+
+        /// <summary>
+        /// Instruct the current formatter to apply the given filter to an XML document prior to formatting.
+        /// </summary>
+        /// <param name="filter">A filter strategy.</param>
+        protected void With(IFilter filter)
+        {
+            Filters = new AsyncFilter[] { filter.FilterAsync };
         }
     }
 }
