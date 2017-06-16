@@ -278,7 +278,7 @@ namespace Bogosoft.Xml
         /// Instruct the current formatter to apply the given filter to an XML document prior to formatting.
         /// </summary>
         /// <param name="filter">A filter strategy.</param>
-        protected void With(AsyncFilter filter)
+        public void With(AsyncFilter filter)
         {
             Filters = new AsyncFilter[] { filter };
         }
@@ -288,7 +288,7 @@ namespace Bogosoft.Xml
         /// to an XML document prior to formatting.
         /// </summary>
         /// <param name="filters">A sequence of filter strategies.</param>
-        protected void With(IEnumerable<AsyncFilter> filters)
+        public void With(IEnumerable<AsyncFilter> filters)
         {
             Filters = filters.ToArray();
         }
@@ -298,7 +298,7 @@ namespace Bogosoft.Xml
         /// to an XML document prior to formatting.
         /// </summary>
         /// <param name="filters">A sequence of filter strategies.</param>
-        protected void With(IEnumerable<IFilter> filters)
+        public void With(IEnumerable<IFilter> filters)
         {
             Filters = filters.Select<IFilter, AsyncFilter>(x => x.FilterAsync).ToArray();
         }
@@ -307,7 +307,7 @@ namespace Bogosoft.Xml
         /// Instruct the current formatter to apply the given filter to an XML document prior to formatting.
         /// </summary>
         /// <param name="filter">A filter strategy.</param>
-        protected void With(IFilter filter)
+        public void With(IFilter filter)
         {
             Filters = new AsyncFilter[] { filter.FilterAsync };
         }
