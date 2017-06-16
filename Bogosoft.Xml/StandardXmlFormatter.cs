@@ -278,9 +278,12 @@ namespace Bogosoft.Xml
         /// Instruct the current formatter to apply the given filter to an XML document prior to formatting.
         /// </summary>
         /// <param name="filter">A filter strategy.</param>
-        public void With(AsyncFilter filter)
+        /// <returns>The current formatter.</returns>
+        public StandardXmlFormatter With(AsyncFilter filter)
         {
             Filters = new AsyncFilter[] { filter };
+
+            return this;
         }
 
         /// <summary>
@@ -288,9 +291,12 @@ namespace Bogosoft.Xml
         /// to an XML document prior to formatting.
         /// </summary>
         /// <param name="filters">A sequence of filter strategies.</param>
-        public void With(IEnumerable<AsyncFilter> filters)
+        /// <returns>The current formatter.</returns>
+        public StandardXmlFormatter With(IEnumerable<AsyncFilter> filters)
         {
             Filters = filters.ToArray();
+
+            return this;
         }
 
         /// <summary>
@@ -298,18 +304,24 @@ namespace Bogosoft.Xml
         /// to an XML document prior to formatting.
         /// </summary>
         /// <param name="filters">A sequence of filter strategies.</param>
-        public void With(IEnumerable<IFilter> filters)
+        /// <returns>The current formatter.</returns>
+        public StandardXmlFormatter With(IEnumerable<IFilter> filters)
         {
             Filters = filters.Select<IFilter, AsyncFilter>(x => x.FilterAsync).ToArray();
+
+            return this;
         }
 
         /// <summary>
         /// Instruct the current formatter to apply the given filter to an XML document prior to formatting.
         /// </summary>
         /// <param name="filter">A filter strategy.</param>
-        public void With(IFilter filter)
+        /// <returns>The current formatter.</returns>
+        public StandardXmlFormatter With(IFilter filter)
         {
             Filters = new AsyncFilter[] { filter.FilterAsync };
+
+            return this;
         }
     }
 }
