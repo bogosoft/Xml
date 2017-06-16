@@ -14,7 +14,7 @@ namespace Bogosoft.Xml
         /// <summary>
         /// Get or set an array of filters to be applied to the document node prior to formatting.
         /// </summary>
-        protected AsyncFilter[] Filters;
+        protected AsyncXmlFilter[] Filters;
 
         /// <summary>Get or set the base indentation to be used during formatting.</summary>
         public String Indent = "";
@@ -91,7 +91,7 @@ namespace Bogosoft.Xml
             CancellationToken token
             )
         {
-            foreach(var filter in (Filters ?? new AsyncFilter[0]))
+            foreach(var filter in (Filters ?? new AsyncXmlFilter[0]))
             {
                 await filter.Invoke(document, token);
             }
@@ -279,9 +279,9 @@ namespace Bogosoft.Xml
         /// </summary>
         /// <param name="filter">A filter strategy.</param>
         /// <returns>The current formatter.</returns>
-        public StandardXmlFormatter With(AsyncFilter filter)
+        public StandardXmlFormatter With(AsyncXmlFilter filter)
         {
-            Filters = new AsyncFilter[] { filter };
+            Filters = new AsyncXmlFilter[] { filter };
 
             return this;
         }
@@ -292,7 +292,7 @@ namespace Bogosoft.Xml
         /// </summary>
         /// <param name="filters">A sequence of filter strategies.</param>
         /// <returns>The current formatter.</returns>
-        public StandardXmlFormatter With(IEnumerable<AsyncFilter> filters)
+        public StandardXmlFormatter With(IEnumerable<AsyncXmlFilter> filters)
         {
             Filters = filters.ToArray();
 
@@ -305,9 +305,9 @@ namespace Bogosoft.Xml
         /// </summary>
         /// <param name="filters">A sequence of filter strategies.</param>
         /// <returns>The current formatter.</returns>
-        public StandardXmlFormatter With(IEnumerable<IFilter> filters)
+        public StandardXmlFormatter With(IEnumerable<IFilterXml> filters)
         {
-            Filters = filters.Select<IFilter, AsyncFilter>(x => x.FilterAsync).ToArray();
+            Filters = filters.Select<IFilterXml, AsyncXmlFilter>(x => x.FilterAsync).ToArray();
 
             return this;
         }
@@ -317,9 +317,9 @@ namespace Bogosoft.Xml
         /// </summary>
         /// <param name="filter">A filter strategy.</param>
         /// <returns>The current formatter.</returns>
-        public StandardXmlFormatter With(IFilter filter)
+        public StandardXmlFormatter With(IFilterXml filter)
         {
-            Filters = new AsyncFilter[] { filter.FilterAsync };
+            Filters = new AsyncXmlFilter[] { filter.FilterAsync };
 
             return this;
         }

@@ -12,5 +12,5 @@ namespace Bogosoft.Xml
     /// <returns>
     /// A <see cref="Task"/> representing the asynchronous operation.
     /// </returns>
-    public delegate Task AsyncFilter(XmlDocument document, CancellationToken token);
+    public delegate Task AsyncXmlFilter(XmlDocument document, CancellationToken token);
 }

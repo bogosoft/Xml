@@ -7,7 +7,7 @@ namespace Bogosoft.Xml
     /// <summary>
     /// Indicates that an implementation is capable of applying a filter to an XML document.
     /// </summary>
-    public interface IFilter
+    public interface IFilterXml
     {
         /// <summary>
         /// Filter a given XML document.
