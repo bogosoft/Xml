@@ -41,12 +41,12 @@ namespace Bogosoft.Xml
         /// Synchronously format a self-serializing object to a given <see cref="TextWriter"/>.
         /// </summary>
         /// <param name="formatter">The current <see cref="IFormatXml"/> implementation.</param>
-        /// <param name="serializable">An XML-serializable object.</param>
+        /// <param name="serializable">A DOM-serializable object.</param>
         /// <param name="writer">A target <see cref="TextWriter"/> to format to.</param>
         /// <returns>A <see cref="Task"/> representing a possibly asynchronous operation.</returns>
         public static void Format(
             this IFormatXml formatter,
-            IXmlSerializable serializable,
+            IDomSerializable serializable,
             TextWriter writer
             )
         {
@@ -88,17 +88,15 @@ namespace Bogosoft.Xml
         }
 
         /// <summary>
-        /// Format a self-serializing object to a given <see cref="TextWriter"/>. Calling this method is equivalent
-        /// to calling <see cref="FormatAsync(IFormatXml, IXmlSerializable, TextWriter, CancellationToken)"/> with
-        /// a value of <see cref="CancellationToken.None"/>.
+        /// Format a self-serializing object to a given <see cref="TextWriter"/>.
         /// </summary>
         /// <param name="formatter">The current <see cref="IFormatXml"/> implementation.</param>
-        /// <param name="serializable">An XML-serializable object.</param>
+        /// <param name="serializable">A DOM-serializable object.</param>
         /// <param name="writer">A target <see cref="TextWriter"/> to format to.</param>
         /// <returns>A <see cref="Task"/> representing a possibly asynchronous operation.</returns>
         public static Task FormatAsync(
             this IFormatXml formatter,
-            IXmlSerializable serializable,
+            IDomSerializable serializable,
             TextWriter writer
             )
         {
@@ -109,13 +107,13 @@ namespace Bogosoft.Xml
         /// Format a self-serializing object to a given <see cref="TextWriter"/>.
         /// </summary>
         /// <param name="formatter">The current <see cref="IFormatXml"/> implementation.</param>
-        /// <param name="serializable">An XML-serializable object.</param>
+        /// <param name="serializable">A DOM-serializable object.</param>
         /// <param name="writer">A target <see cref="TextWriter"/> to format to.</param>
         /// <param name="token">A <see cref="CancellationToken"/> object.</param>
         /// <returns>A <see cref="Task"/> representing a possibly asynchronous operation.</returns>
         public static Task FormatAsync(
             this IFormatXml formatter,
-            IXmlSerializable serializable,
+            IDomSerializable serializable,
             TextWriter writer,
             CancellationToken token
             )
