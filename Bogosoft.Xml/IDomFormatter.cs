@@ -9,7 +9,7 @@ namespace Bogosoft.Xml
     /// Indicates that an implementation is capable of formatting an <see cref="XmlNode"/>
     /// and writing the resulting serialization to a <see cref="TextWriter"/>.
     /// </summary>
-    public interface IFormatXml
+    public interface IDomFormatter
     {
         /// <summary>
         /// Format a given <see cref="XmlNode"/> to a given <see cref="TextWriter"/>.

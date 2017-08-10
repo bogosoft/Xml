@@ -47,14 +47,14 @@
     <Compile Include="FilterExtensions.cs" />
     <Compile Include="IDomSerializable.cs" />
     <Compile Include="IFilterXml.cs" />
-    <Compile Include="IFormatXml.cs" />
-    <Compile Include="XmlFormatterAsync.cs" />
-    <Compile Include="XmlFormatterExtensions.cs" />
+    <Compile Include="IDomFormatter.cs" />
+    <Compile Include="AsyncDomFormatter.cs" />
+    <Compile Include="DomFormatterExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TextWriterExtensions.cs" />
     <Compile Include="XmlDocumentExtensions.cs" />
     <Compile Include="XmlElementExtensions.cs" />
-    <Compile Include="StandardXmlFormatter.cs" />
+    <Compile Include="StandardDomFormatter.cs" />
     <Compile Include="XmlNodeExtensions.cs" />
   </ItemGroup>
   <ItemGroup>

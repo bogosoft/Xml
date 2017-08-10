@@ -21,5 +21,5 @@ namespace Bogosoft.Xml
     /// <returns>
     /// A <see cref="Task"/> representing an asynchronous operation.
     /// </returns>
-    public delegate Task XmlFormatterAsync(XmlNode node, TextWriter writer, CancellationToken token);
+    public delegate Task AsyncDomFormatter(XmlNode node, TextWriter writer, CancellationToken token);
 }

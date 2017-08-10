@@ -8,8 +8,8 @@ using System.Xml;
 
 namespace Bogosoft.Xml
 {
-    /// <summary>A standard XML formatter.</summary>
-    public class StandardXmlFormatter : IFormatXml
+    /// <summary>A standard Document Object Model (DOM) formatter.</summary>
+    public class StandardDomFormatter : IDomFormatter
     {
         /// <summary>
         /// Get or set an array of filters to be applied to the document node prior to formatting.
@@ -279,7 +279,7 @@ namespace Bogosoft.Xml
         /// </summary>
         /// <param name="filter">A filter strategy.</param>
         /// <returns>The current formatter.</returns>
-        public StandardXmlFormatter With(AsyncXmlFilter filter)
+        public StandardDomFormatter With(AsyncXmlFilter filter)
         {
             Filters = new AsyncXmlFilter[] { filter };
 
@@ -292,7 +292,7 @@ namespace Bogosoft.Xml
         /// </summary>
         /// <param name="filters">A sequence of filter strategies.</param>
         /// <returns>The current formatter.</returns>
-        public StandardXmlFormatter With(IEnumerable<AsyncXmlFilter> filters)
+        public StandardDomFormatter With(IEnumerable<AsyncXmlFilter> filters)
         {
             Filters = filters.ToArray();
 
@@ -305,7 +305,7 @@ namespace Bogosoft.Xml
         /// </summary>
         /// <param name="filters">A sequence of filter strategies.</param>
         /// <returns>The current formatter.</returns>
-        public StandardXmlFormatter With(IEnumerable<IFilterXml> filters)
+        public StandardDomFormatter With(IEnumerable<IFilterXml> filters)
         {
             Filters = filters.Select<IFilterXml, AsyncXmlFilter>(x => x.FilterAsync).ToArray();
 
@@ -317,7 +317,7 @@ namespace Bogosoft.Xml
         /// </summary>
         /// <param name="filter">A filter strategy.</param>
         /// <returns>The current formatter.</returns>
-        public StandardXmlFormatter With(IFilterXml filter)
+        public StandardDomFormatter With(IFilterXml filter)
         {
             Filters = new AsyncXmlFilter[] { filter.FilterAsync };
 
