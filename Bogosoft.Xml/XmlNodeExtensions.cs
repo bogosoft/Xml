@@ -8,6 +8,23 @@ namespace Bogosoft.Xml
     public static class XmlNodeExtensions
     {
         /// <summary>
+        /// Append a CDATA section to the current node.
+        /// </summary>
+        /// <param name="parent">The current node.</param>
+        /// <param name="data">
+        /// Non-parsed character data to append to the current node as a CDATA section.
+        /// </param>
+        /// <returns>The newly created CDATA section.</returns>
+        public static XmlCDataSection AppendCDataSection(this XmlNode parent, string data)
+        {
+            var child = parent.GetOwnerDocument().CreateCDataSection(data);
+
+            parent.AppendChild(child);
+
+            return child;
+        }
+
+        /// <summary>
         /// Append a child node to the current node, returning the child as the specified DOM node type.
         /// </summary>
         /// <typeparam name="T">The type of <see cref="XmlNode"/> that will be returned.</typeparam>
@@ -80,6 +97,23 @@ namespace Bogosoft.Xml
             )
         {
             var child = parent.GetOwnerDocument().CreateElement(prefix, localName, namespaceUri);
+
+            parent.AppendChild(child);
+
+            return child;
+        }
+
+        /// <summary>
+        /// Append a DOM text node to the current node.
+        /// </summary>
+        /// <param name="parent">The current node.</param>
+        /// <param name="data">
+        /// Parsed character data to append to the current node as a text node.
+        /// </param>
+        /// <returns>The newly created DOM text node.</returns>
+        public static XmlText AppendTextNode(this XmlNode parent, string data)
+        {
+            var child = parent.GetOwnerDocument().CreateTextNode(data);
 
             parent.AppendChild(child);
 
