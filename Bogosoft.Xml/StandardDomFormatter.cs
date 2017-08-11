@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
@@ -9,13 +7,8 @@ using System.Xml;
 namespace Bogosoft.Xml
 {
     /// <summary>A standard Document Object Model (DOM) formatter.</summary>
-    public class StandardDomFormatter : IDomFormatter
+    public class StandardDomFormatter : DomFormatterBase
     {
-        /// <summary>
-        /// Get or set an array of filters to be applied to the document node prior to formatting.
-        /// </summary>
-        protected AsyncXmlFilter[] Filters;
-
         /// <summary>Get or set the base indentation to be used during formatting.</summary>
         public String Indent = "";
 
@@ -27,7 +20,7 @@ namespace Bogosoft.Xml
         /// <param name="writer">A target <see cref="TextWriter"/> to format to.</param>
         /// <param name="token">A <see cref="CancellationToken"/> object.</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
-        public Task FormatAsync(XmlNode node, TextWriter writer, CancellationToken token)
+        public override Task FormatAsync(XmlNode node, TextWriter writer, CancellationToken token)
         {
             return FormatNodeAsync(node, writer, "", token);
         }
@@ -91,9 +84,9 @@ namespace Bogosoft.Xml
             CancellationToken token
             )
         {
-            foreach(var filter in (Filters ?? new AsyncXmlFilter[0]))
+            foreach (var transformer in Transformers)
             {
-                await filter.Invoke(document, token);
+                await transformer.Invoke(document, token);
             }
 
             foreach (XmlNode child in document.ChildNodes)
@@ -272,56 +265,6 @@ namespace Bogosoft.Xml
             )
         {
             return writer.WriteAsync(declaration.OuterXml, token);
-        }
-
-        /// <summary>
-        /// Instruct the current formatter to apply the given filter to an XML document prior to formatting.
-        /// </summary>
-        /// <param name="filter">A filter strategy.</param>
-        /// <returns>The current formatter.</returns>
-        public StandardDomFormatter With(AsyncXmlFilter filter)
-        {
-            Filters = new AsyncXmlFilter[] { filter };
-
-            return this;
-        }
-
-        /// <summary>
-        /// Instruct the current formatter to apply a given sequence of filters
-        /// to an XML document prior to formatting.
-        /// </summary>
-        /// <param name="filters">A sequence of filter strategies.</param>
-        /// <returns>The current formatter.</returns>
-        public StandardDomFormatter With(IEnumerable<AsyncXmlFilter> filters)
-        {
-            Filters = filters.ToArray();
-
-            return this;
-        }
-
-        /// <summary>
-        /// Instruct the current formatter to apply a given sequence of filters
-        /// to an XML document prior to formatting.
-        /// </summary>
-        /// <param name="filters">A sequence of filter strategies.</param>
-        /// <returns>The current formatter.</returns>
-        public StandardDomFormatter With(IEnumerable<IFilterXml> filters)
-        {
-            Filters = filters.Select<IFilterXml, AsyncXmlFilter>(x => x.FilterAsync).ToArray();
-
-            return this;
-        }
-
-        /// <summary>
-        /// Instruct the current formatter to apply the given filter to an XML document prior to formatting.
-        /// </summary>
-        /// <param name="filter">A filter strategy.</param>
-        /// <returns>The current formatter.</returns>
-        public StandardDomFormatter With(IFilterXml filter)
-        {
-            Filters = new AsyncXmlFilter[] { filter.FilterAsync };
-
-            return this;
         }
     }
 }
