@@ -12,14 +12,14 @@ namespace Bogosoft.Xml
     public interface IDomFormatter
     {
         /// <summary>
-        /// Format a given <see cref="XmlNode"/> to a given <see cref="TextWriter"/>.
+        /// Format a given DOM node to an output writer.
         /// </summary>
-        /// <param name="node">A node to format.</param>
-        /// <param name="writer">A target to write the resulting serialization to.</param>
+        /// <param name="node">A DOM node to format.</param>
+        /// <param name="output">An output writer.</param>
         /// <param name="token">A <see cref="CancellationToken"/> object.</param>
         /// <returns>
         /// A <see cref="Task"/> representing the asynchronous operation.
         /// </returns>
-        Task FormatAsync(XmlNode node, TextWriter writer, CancellationToken token);
+        Task FormatAsync(XmlNode node, TextWriter output, CancellationToken token);
     }
 }
