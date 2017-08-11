@@ -11,6 +11,19 @@ namespace Bogosoft.Xml
     public static class DomFormatterExtensions
     {
         /// <summary>
+        /// Synchronously format a given DOM-serializable object to an output writer.
+        /// </summary>
+        /// <param name="formatter">
+        /// The current <see cref="AsyncDomFormatter"/> implementation.
+        /// </param>
+        /// <param name="object">A DOM-serializable object.</param>
+        /// <param name="output">An output writer.</param>
+        public static void Format(this AsyncDomFormatter formatter, IDomSerializable @object, TextWriter output)
+        {
+            formatter.FormatAsync(@object, output, CancellationToken.None).GetAwaiter().GetResult();
+        }
+
+        /// <summary>
         /// Synchronously format a given XML-serializable object to an output writer.
         /// </summary>
         /// <param name="formatter">
@@ -37,6 +50,48 @@ namespace Bogosoft.Xml
         }
 
         /// <summary>
+        /// Format a given DOM-serializable object to an output writer.
+        /// </summary>
+        /// <param name="formatter">
+        /// The current <see cref="AsyncDomFormatter"/> implementation.
+        /// </param>
+        /// <param name="serializable">A DOM-serializable object.</param>
+        /// <param name="output">An output writer.</param>
+        /// <returns>
+        /// A <see cref="Task"/> representing the asynchronous operation.
+        /// </returns>
+        public static Task FormatAsync(
+            this AsyncDomFormatter formatter,
+            IDomSerializable serializable,
+            TextWriter output
+            )
+        {
+            return formatter.FormatAsync(serializable, output, CancellationToken.None);
+        }
+
+        /// <summary>
+        /// Format a given DOM-serializable object to an output writer.
+        /// </summary>
+        /// <param name="formatter">
+        /// The current <see cref="AsyncDomFormatter"/> implementation.
+        /// </param>
+        /// <param name="serializable">A DOM-serializable object.</param>
+        /// <param name="output">An output writer.</param>
+        /// <param name="token">A <see cref="CancellationToken"/> object.</param>
+        /// <returns>
+        /// A <see cref="Task"/> representing the asynchronous operation.
+        /// </returns>
+        public static Task FormatAsync(
+            this AsyncDomFormatter formatter,
+            IDomSerializable serializable,
+            TextWriter output,
+            CancellationToken token
+            )
+        {
+            return formatter.Invoke(serializable.Serialize(), output, token);
+        }
+
+        /// <summary>
         /// Format a given XML-serializable object to an output writer.
         /// </summary>
         /// <param name="formatter">
@@ -54,22 +109,6 @@ namespace Bogosoft.Xml
             )
         {
             return formatter.FormatAsync(@object, output, CancellationToken.None);
-        }
-
-        /// <summary>
-        /// Format a given DOM node to an output writer.
-        /// </summary>
-        /// <param name="formatter">
-        /// The current <see cref="AsyncDomFormatter"/> implementation.
-        /// </param>
-        /// <param name="node">A DOM node to format.</param>
-        /// <param name="output">An output writer.</param>
-        /// <returns>
-        /// A <see cref="Task"/> representing the asynchronous operation.
-        /// </returns>
-        public static Task FormatAsync(this AsyncDomFormatter formatter, XmlNode node, TextWriter output)
-        {
-            return formatter.Invoke(node, output, CancellationToken.None);
         }
 
         /// <summary>
@@ -104,6 +143,22 @@ namespace Bogosoft.Xml
             }
 
             return formatter.Invoke(document, output, token);
+        }
+
+        /// <summary>
+        /// Format a given DOM node to an output writer.
+        /// </summary>
+        /// <param name="formatter">
+        /// The current <see cref="AsyncDomFormatter"/> implementation.
+        /// </param>
+        /// <param name="node">A DOM node to format.</param>
+        /// <param name="output">An output writer.</param>
+        /// <returns>
+        /// A <see cref="Task"/> representing the asynchronous operation.
+        /// </returns>
+        public static Task FormatAsync(this AsyncDomFormatter formatter, XmlNode node, TextWriter output)
+        {
+            return formatter.Invoke(node, output, CancellationToken.None);
         }
 
         /// <summary>
@@ -179,40 +234,6 @@ namespace Bogosoft.Xml
         }
 
         /// <summary>
-        /// Format a given XML-serializable object to an output writer.
-        /// </summary>
-        /// <param name="formatter">The current <see cref="IDomFormatter"/> implementation.</param>
-        /// <param name="serializable">An XML-serializable object.</param>
-        /// <param name="output">An output writer.</param>
-        /// <param name="token">A <see cref="CancellationToken"/> object.</param>
-        /// <returns>
-        /// A <see cref="Task"/> representing the asynchronous operation.
-        /// </returns>
-        public static async Task FormatAsync(
-            this IDomFormatter formatter,
-            IXmlSerializable serializable,
-            TextWriter output,
-            CancellationToken token
-            )
-        {
-            var document = new XmlDocument();
-
-            using (var stream = new MemoryStream())
-            {
-                using (var xmlWriter = XmlWriter.Create(stream))
-                {
-                    serializable.WriteXml(xmlWriter);
-
-                    stream.Position = 0;
-
-                    document.Load(stream);
-                }
-            }
-
-            await formatter.FormatAsync(document, output, token);
-        }
-
-        /// <summary>
         /// Format a given DOM-serializable object to an output writer.
         /// </summary>
         /// <param name="formatter">The current <see cref="IDomFormatter"/> implementation.</param>
@@ -248,6 +269,54 @@ namespace Bogosoft.Xml
             )
         {
             return formatter.FormatAsync(serializable.Serialize(), output, token);
+        }
+
+        /// <summary>
+        /// Format a given XML-serializable object to an output writer.
+        /// </summary>
+        /// <param name="formatter">The current <see cref="IDomFormatter"/> implementation.</param>
+        /// <param name="serializable">An XML-serializable object.</param>
+        /// <param name="output">An output writer.</param>
+        /// <returns>
+        /// A <see cref="Task"/> representing the asynchronous operation.
+        /// </returns>
+        public static Task FormatAsync(this IDomFormatter formatter, IXmlSerializable serializable, TextWriter output)
+        {
+            return formatter.FormatAsync(serializable, output, CancellationToken.None);
+        }
+
+        /// <summary>
+        /// Format a given XML-serializable object to an output writer.
+        /// </summary>
+        /// <param name="formatter">The current <see cref="IDomFormatter"/> implementation.</param>
+        /// <param name="serializable">An XML-serializable object.</param>
+        /// <param name="output">An output writer.</param>
+        /// <param name="token">A <see cref="CancellationToken"/> object.</param>
+        /// <returns>
+        /// A <see cref="Task"/> representing the asynchronous operation.
+        /// </returns>
+        public static async Task FormatAsync(
+            this IDomFormatter formatter,
+            IXmlSerializable serializable,
+            TextWriter output,
+            CancellationToken token
+            )
+        {
+            var document = new XmlDocument();
+
+            using (var stream = new MemoryStream())
+            {
+                using (var xmlWriter = XmlWriter.Create(stream))
+                {
+                    serializable.WriteXml(xmlWriter);
+
+                    stream.Position = 0;
+
+                    document.Load(stream);
+                }
+            }
+
+            await formatter.FormatAsync(document, output, token);
         }
 
         /// <summary>
