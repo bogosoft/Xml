@@ -50,6 +50,56 @@ namespace Bogosoft.Xml
         }
 
         /// <summary>
+        /// Synchronously format a given DOM-serializable object to an output writer.
+        /// </summary>
+        /// <param name="formatter">The current <see cref="IDomFormatter"/> implementation.</param>
+        /// <param name="serializable">A DOM-serializable object.</param>
+        /// <param name="output">An output writer.</param>
+        /// <returns>
+        /// A <see cref="Task"/> representing the asynchronous operation.
+        /// </returns>
+        public static void Format(
+            this IDomFormatter formatter,
+            IDomSerializable serializable,
+            TextWriter output
+            )
+        {
+            formatter.FormatAsync(serializable.Serialize(), output, CancellationToken.None)
+                     .GetAwaiter()
+                     .GetResult();
+        }
+
+        /// <summary>
+        /// Synchronously format a given XML-serializable object to an output writer.
+        /// </summary>
+        /// <param name="formatter">The current <see cref="IDomFormatter"/> implementation.</param>
+        /// <param name="serializable">An XML-serializable object.</param>
+        /// <param name="output">An output writer.</param>
+        public static void Format(
+            this IDomFormatter formatter,
+            IXmlSerializable serializable,
+            TextWriter output
+            )
+        {
+            formatter.FormatAsync(serializable, output, CancellationToken.None).GetAwaiter().GetResult();
+        }
+
+        /// <summary>
+        /// Synchronously format a given DOM node to an output writer.
+        /// </summary>
+        /// <param name="formatter">The current <see cref="IDomFormatter"/> implementation.</param>
+        /// <param name="node">A DOM node to format.</param>
+        /// <param name="output">An output writer.</param>
+        public static void Format(
+            this IDomFormatter formatter,
+            XmlNode node,
+            TextWriter output
+            )
+        {
+            formatter.FormatAsync(node, output, CancellationToken.None).GetAwaiter().GetResult();
+        }
+
+        /// <summary>
         /// Format a given DOM-serializable object to an output writer.
         /// </summary>
         /// <param name="formatter">
@@ -181,56 +231,6 @@ namespace Bogosoft.Xml
             )
         {
             return formatter.Invoke(node, output, token);
-        }
-
-        /// <summary>
-        /// Synchronously format a given DOM node to an output writer.
-        /// </summary>
-        /// <param name="formatter">The current <see cref="IDomFormatter"/> implementation.</param>
-        /// <param name="node">A DOM node to format.</param>
-        /// <param name="output">An output writer.</param>
-        public static void Format(
-            this IDomFormatter formatter,
-            XmlNode node,
-            TextWriter output
-            )
-        {
-            formatter.FormatAsync(node, output, CancellationToken.None).GetAwaiter().GetResult();
-        }
-
-        /// <summary>
-        /// Synchronously format a given XML-serializable object to an output writer.
-        /// </summary>
-        /// <param name="formatter">The current <see cref="IDomFormatter"/> implementation.</param>
-        /// <param name="serializable">An XML-serializable object.</param>
-        /// <param name="output">An output writer.</param>
-        public static void Format(
-            this IDomFormatter formatter,
-            IXmlSerializable serializable,
-            TextWriter output
-            )
-        {
-            formatter.FormatAsync(serializable, output, CancellationToken.None).GetAwaiter().GetResult();
-        }
-
-        /// <summary>
-        /// Synchronously format a given DOM-serializable object to an output writer.
-        /// </summary>
-        /// <param name="formatter">The current <see cref="IDomFormatter"/> implementation.</param>
-        /// <param name="serializable">A DOM-serializable object.</param>
-        /// <param name="output">An output writer.</param>
-        /// <returns>
-        /// A <see cref="Task"/> representing the asynchronous operation.
-        /// </returns>
-        public static void Format(
-            this IDomFormatter formatter,
-            IDomSerializable serializable,
-            TextWriter output
-            )
-        {
-            formatter.FormatAsync(serializable.Serialize(), output, CancellationToken.None)
-                     .GetAwaiter()
-                     .GetResult();
         }
 
         /// <summary>
