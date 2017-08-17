@@ -1,4 +1,5 @@
-﻿using System.Xml;
+﻿using System;
+using System.Xml;
 using System.Xml.XPath;
 
 namespace Bogosoft.Xml
@@ -45,8 +46,17 @@ namespace Bogosoft.Xml
         /// <param name="node">
         /// A target DOM node to serialize the given object to.
         /// </param>
+        /// <exception cref="InvalidOperationException">
+        /// Thrown in the event that the given object does not implement the
+        /// <see cref="IDomSerializable"/> interface.
+        /// </exception>
         public void Serialize(object @object, XmlNode node)
         {
+            if (!CanSerialize(@object))
+            {
+                throw new InvalidOperationException($"The given object does not implement the {nameof(IDomSerializable)} interface.");
+            }
+
             (@object as IDomSerializable).SerializeTo(node);
         }
     }
