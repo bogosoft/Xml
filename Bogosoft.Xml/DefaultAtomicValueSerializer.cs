@@ -43,8 +43,16 @@ namespace Bogosoft.Xml
         /// <param name="node">
         /// A target DOM node to serialize the given object to.
         /// </param>
+        /// <exception cref="InvalidOperationException">
+        /// Thrown in the event that the given object is not considered to be atomic.
+        /// </exception>
         public void Serialize(object @object, XmlNode node)
         {
+            if (!CanSerialize(@object))
+            {
+                throw new InvalidOperationException("The current serializer can only serialize types considered to be atomic.");
+            }
+
             var child = node.AppendElement(@object.GetType().Name);
 
             if (@object is string)
