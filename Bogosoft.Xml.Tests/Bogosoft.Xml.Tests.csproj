@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="DefaultAtomicValueSerializerTests.cs" />
     <Compile Include="DefaultEnumValueSerializerTests.cs" />
+    <Compile Include="DomSerializableSerializerTests.cs" />
     <Compile Include="NullSerializerTests.cs" />
     <Compile Include="XmlFormatterExtensions.cs" />
     <Compile Include="UnitTests.cs" />
