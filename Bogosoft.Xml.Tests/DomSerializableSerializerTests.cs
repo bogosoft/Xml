@@ -50,6 +50,30 @@ namespace Bogosoft.Xml.Tests
         }
 
         [TestCase]
+        public void CanSerializeDomSerializableObjectToNode()
+        {
+            var location = new Location { Latitude = -20, Longitude = -180 };
+
+            var document = new XmlDocument();
+
+            new DomSerializableSerializer().Serialize(location, document);
+
+            document.ChildNodes.Count.ShouldEqual(1);
+
+            var root = document.ChildNodes[0] as XmlElement;
+
+            root.Name.ShouldEqual("location");
+
+            root.HasAttribute("lat").ShouldBeTrue();
+
+            root.GetAttribute("lat").ShouldEqual("-20");
+
+            root.HasAttribute("long").ShouldBeTrue();
+
+            root.GetAttribute("long").ShouldEqual("-180");
+        }
+
+        [TestCase]
         public void IndicatesCanSerializeDomSerializableObject()
         {
             new DomSerializableSerializer().CanSerialize(new Location()).ShouldBeTrue();
@@ -67,6 +91,12 @@ namespace Bogosoft.Xml.Tests
             var serializer = new DomSerializableSerializer();
 
             Action action = () => serializer.Serialize(DateTime.Now);
+
+            action.ShouldThrow<InvalidOperationException>();
+
+            var document = new XmlDocument();
+
+            action = () => serializer.Serialize(Guid.Empty, document);
 
             action.ShouldThrow<InvalidOperationException>();
         }
