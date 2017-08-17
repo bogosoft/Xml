@@ -87,7 +87,14 @@ namespace Bogosoft.Xml
 
                 using (var reader = XmlReader.Create(stream))
                 {
-                    node.AppendChild(node.GetOwnerDocument().ReadNode(reader));
+                    var document = new XmlDocument();
+
+                    document.Load(reader);
+
+                    foreach (XmlNode child in document.ChildNodes)
+                    {
+                        node.AppendChild(node.GetOwnerDocument().ImportNode(child, true));
+                    }
                 }
             }
         }
