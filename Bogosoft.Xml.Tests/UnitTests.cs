@@ -5,7 +5,7 @@ using System.Xml;
 
 namespace Bogosoft.Xml.Tests
 {
-    [TestFixture]
+    [TestFixture, Category("Unit")]
     public class UnitTests
     {
         [TestCase]
