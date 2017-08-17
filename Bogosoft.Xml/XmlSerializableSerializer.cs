@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Xml;
 using System.Xml.Serialization;
 using System.Xml.XPath;
@@ -31,8 +32,17 @@ namespace Bogosoft.Xml
         /// <returns>
         /// An XPath-navigable object representing the serialized form of the given object.
         /// </returns>
+        /// <exception cref="InvalidOperationException">
+        /// Thrown in the event that an attempt is made to serialize an object
+        /// that does not implement the <see cref="IXmlSerializable"/> interface.
+        /// </exception>
         public IXPathNavigable Serialize(object @object)
         {
+            if (!CanSerialize(@object))
+            {
+                throw new InvalidOperationException($"The given object does not implement the {nameof(IXmlSerializable)} interface.");
+            }
+
             using (var stream = new MemoryStream())
             using (var writer = XmlWriter.Create(stream))
             {
@@ -55,8 +65,17 @@ namespace Bogosoft.Xml
         /// <param name="node">
         /// A target DOM node to serialize the given object to.
         /// </param>
+        /// <exception cref="InvalidOperationException">
+        /// Thrown in the event that an attempt is made to serialize an object
+        /// that does not implement the <see cref="IXmlSerializable"/> interface.
+        /// </exception>
         public void Serialize(object @object, XmlNode node)
         {
+            if (!CanSerialize(@object))
+            {
+                throw new InvalidOperationException($"The given object does not implement the {nameof(IXmlSerializable)} interface.");
+            }
+
             using (var stream = new MemoryStream())
             {
                 using (var writer = XmlWriter.Create(stream))
