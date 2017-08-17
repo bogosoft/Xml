@@ -29,6 +29,9 @@ namespace Bogosoft.Xml
         /// <param name="node">
         /// A target DOM node to serialize the given object to.
         /// </param>
+        /// <exception cref="InvalidOperationException">
+        /// Thrown in the event that the given object is not an enum value.
+        /// </exception>
         public void Serialize(object @object, XmlNode node)
         {
             if (!CanSerialize(@object))
