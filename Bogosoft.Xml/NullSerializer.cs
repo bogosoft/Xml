@@ -1,4 +1,5 @@
-﻿using System.Xml;
+﻿using System;
+using System.Xml;
 using System.Xml.XPath;
 
 namespace Bogosoft.Xml
@@ -29,8 +30,16 @@ namespace Bogosoft.Xml
         /// <returns>
         /// An XPath-navigable object representing the serialized form of the given object.
         /// </returns>
+        /// <exception cref="InvalidOperationException">
+        /// Thrown in the event that the given object is not null.
+        /// </exception>
         public IXPathNavigable Serialize(object @object)
         {
+            if (!CanSerialize(@object))
+            {
+                throw new InvalidOperationException("The current serializer expects only null values");
+            }
+
             return new XmlDocument();
         }
 
@@ -44,6 +53,11 @@ namespace Bogosoft.Xml
         /// </param>
         public void Serialize(object @object, XmlNode node)
         {
+            if (!CanSerialize(@object))
+            {
+                throw new InvalidOperationException("The current serializer expects only null values");
+            }
+
             node.AppendElement("null");
         }
     }
