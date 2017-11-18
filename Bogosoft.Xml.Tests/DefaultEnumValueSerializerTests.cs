@@ -1,5 +1,5 @@
 ﻿using NUnit.Framework;
-using Should;
+using Shouldly;
 using System;
 using System.IO;
 using System.Xml;
@@ -28,23 +28,23 @@ namespace Bogosoft.Xml.Tests
 
             root.ShouldNotBeNull();
 
-            root.Name.ShouldEqual("enum");
+            root.Name.ShouldBe("enum");
 
             root.HasAttribute("namespace").ShouldBeTrue();
 
-            root.GetAttribute("namespace").ShouldEqual("System.IO");
+            root.GetAttribute("namespace").ShouldBe("System.IO");
 
             root.HasAttribute("type").ShouldBeTrue();
 
-            root.GetAttribute("type").ShouldEqual("FileMode");
+            root.GetAttribute("type").ShouldBe("FileMode");
 
             root.HasAttribute("value").ShouldBeTrue();
 
-            root.GetAttribute("value").ShouldEqual("3");
+            root.GetAttribute("value").ShouldBe("3");
 
-            root.ChildNodes.Count.ShouldEqual(1);
+            root.ChildNodes.Count.ShouldBe(1);
 
-            root.ChildNodes[0].InnerText.ShouldEqual("Open");
+            root.ChildNodes[0].InnerText.ShouldBe("Open");
         }
 
         [TestCase]

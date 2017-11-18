@@ -1,5 +1,5 @@
 ﻿using NUnit.Framework;
-using Should;
+using Shouldly;
 using System;
 using System.Collections.Generic;
 using System.Xml;
@@ -48,13 +48,13 @@ namespace Bogosoft.Xml.Tests
 
                 serializer.Serialize(x, document);
 
-                document.ChildNodes.Count.ShouldEqual(1);
+                document.ChildNodes.Count.ShouldBe(1);
 
-                document.ChildNodes[0].Name.ShouldEqual(x.GetType().Name);
+                document.ChildNodes[0].Name.ShouldBe(x.GetType().Name);
 
-                document.ChildNodes[0].ChildNodes.Count.ShouldEqual(1);
+                document.ChildNodes[0].ChildNodes.Count.ShouldBe(1);
 
-                document.ChildNodes[0].ChildNodes[0].InnerText.ShouldEqual(x.ToString());
+                document.ChildNodes[0].ChildNodes[0].InnerText.ShouldBe(x.ToString());
             }
         }
 

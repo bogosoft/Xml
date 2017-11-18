@@ -1,5 +1,5 @@
 ﻿using NUnit.Framework;
-using Should;
+using Shouldly;
 using System;
 using System.Xml;
 
@@ -30,23 +30,23 @@ namespace Bogosoft.Xml.Tests
 
             var serialized = new DomSerializableSerializer().Serialize(location);
 
-            serialized.ShouldBeType<XmlDocument>();
+            serialized.ShouldBeOfType<XmlDocument>();
 
             var document = serialized as XmlDocument;
 
-            document.ChildNodes.Count.ShouldEqual(1);
+            document.ChildNodes.Count.ShouldBe(1);
 
             var root = document.ChildNodes[0] as XmlElement;
 
-            root.Name.ShouldEqual("location");
+            root.Name.ShouldBe("location");
 
             root.HasAttribute("lat").ShouldBeTrue();
 
-            root.GetAttribute("lat").ShouldEqual("30");
+            root.GetAttribute("lat").ShouldBe("30");
 
             root.HasAttribute("long").ShouldBeTrue();
 
-            root.GetAttribute("long").ShouldEqual("-101");
+            root.GetAttribute("long").ShouldBe("-101");
         }
 
         [TestCase]
@@ -58,19 +58,19 @@ namespace Bogosoft.Xml.Tests
 
             new DomSerializableSerializer().Serialize(location, document);
 
-            document.ChildNodes.Count.ShouldEqual(1);
+            document.ChildNodes.Count.ShouldBe(1);
 
             var root = document.ChildNodes[0] as XmlElement;
 
-            root.Name.ShouldEqual("location");
+            root.Name.ShouldBe("location");
 
             root.HasAttribute("lat").ShouldBeTrue();
 
-            root.GetAttribute("lat").ShouldEqual("-20");
+            root.GetAttribute("lat").ShouldBe("-20");
 
             root.HasAttribute("long").ShouldBeTrue();
 
-            root.GetAttribute("long").ShouldEqual("-180");
+            root.GetAttribute("long").ShouldBe("-180");
         }
 
         [TestCase]

@@ -1,80 +1,29 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{5403286C-667F-4A6A-9029-B9ABEE22BC21}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Bogosoft.Xml</RootNamespace>
-    <AssemblyName>Bogosoft.Xml</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Debug\Bogosoft.Xml.XML</DocumentationFile>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Release\Bogosoft.Xml.XML</DocumentationFile>
-  </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="AsyncDomTransformer.cs" />
-    <Compile Include="ComposableSerializer.cs" />
-    <Compile Include="DefaultAtomicValueSerializer.cs" />
-    <Compile Include="DefaultXmlSerializer.cs" />
-    <Compile Include="DomFormatterBase.cs" />
-    <Compile Include="DomSerializableExtensions.cs" />
-    <Compile Include="DomSerializableSerializer.cs" />
-    <Compile Include="DomTransformerExtensions.cs" />
-    <Compile Include="DefaultEnumValueSerializer.cs" />
-    <Compile Include="IDomNodeSerializer.cs" />
-    <Compile Include="IDomSerializable.cs" />
-    <Compile Include="IDomTransformer.cs" />
-    <Compile Include="IDomFormatter.cs" />
-    <Compile Include="AsyncDomFormatter.cs" />
-    <Compile Include="DomFormatterExtensions.cs" />
-    <Compile Include="ISerializer.cs" />
-    <Compile Include="ListExtensions.cs" />
-    <Compile Include="NullSerializer.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TextWriterExtensions.cs" />
-    <Compile Include="StandardDomFormatter.cs" />
-    <Compile Include="XmlNodeExtensions.cs" />
-    <Compile Include="XmlSerializableSerializer.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Bogosoft.Xml.nuspec" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<AssemblyVersion>1.1.0</AssemblyVersion>
+		<Authors>Clayton Roth</Authors>
+		<Company>Bogosoft</Company>
+		<Copyright>Copyright © 2017</Copyright>
+		<Description>Extended functionality for types within the System.Xml namespace; types which facilitate XML serialization.</Description>
+		<FileVersion>1.1.0</FileVersion>
+		<PackageLicenseUrl>https://raw.githubusercontent.com/bogosoft/Xml/master/LICENSE</PackageLicenseUrl>
+		<PackageProjectUrl>https://github.com/bogosoft/Xml</PackageProjectUrl>
+		<PackageTags>xml serialization</PackageTags>
+		<RepositoryUrl>https://github.com/bogosoft/Xml</RepositoryUrl>
+		<TargetFrameworks>netstandard2.0;net45</TargetFrameworks>
+		<Title>Bogosoft.Xml</Title>
+		<Version>1.1.0</Version>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<DocumentationFile>bin\Debug\netstandard2.0\Bogosoft.Xml.xml</DocumentationFile>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+		<DocumentationFile>bin\Release\netstandard2.0\Bogosoft.Xml.xml</DocumentationFile>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<DocumentationFile>bin\Debug\net45\Bogosoft.Xml.xml</DocumentationFile>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+		<DocumentationFile>bin\Release\net45\Bogosoft.Xml.xml</DocumentationFile>
+	</PropertyGroup>
 </Project>

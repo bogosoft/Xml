@@ -1,5 +1,5 @@
 ﻿using NUnit.Framework;
-using Should;
+using Shouldly;
 using System.Threading.Tasks;
 using System.Xml;
 
@@ -19,7 +19,7 @@ namespace Bogosoft.Xml.Tests
 
             var formatted = await new StandardDomFormatter().ToStringAsync(document);
 
-            formatted.ShouldEqual("<test say=\"Hello, World!\"/>");
+            formatted.ShouldBe("<test say=\"Hello, World!\"/>");
         }
     }
 }

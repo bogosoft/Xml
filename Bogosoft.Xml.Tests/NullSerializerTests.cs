@@ -1,10 +1,6 @@
 ﻿using NUnit.Framework;
-using Should;
+using Shouldly;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml;
 
 namespace Bogosoft.Xml.Tests
@@ -17,7 +13,7 @@ namespace Bogosoft.Xml.Tests
         {
             var serialized = new NullSerializer().Serialize(null);
 
-            serialized.ShouldBeType<XmlDocument>();
+            serialized.ShouldBeOfType<XmlDocument>();
 
             (serialized as XmlDocument).HasChildNodes.ShouldBeFalse();
         }
@@ -29,9 +25,9 @@ namespace Bogosoft.Xml.Tests
 
             new NullSerializer().Serialize(null, document);
 
-            document.ChildNodes.Count.ShouldEqual(1);
+            document.ChildNodes.Count.ShouldBe(1);
 
-            document.ChildNodes[0].Name.ShouldEqual("null");
+            document.ChildNodes[0].Name.ShouldBe("null");
         }
 
         [TestCase]

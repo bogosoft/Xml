@@ -1,5 +1,5 @@
 ﻿using NUnit.Framework;
-using Should;
+using Shouldly;
 using System;
 using System.Xml.Serialization;
 using System.Xml;
@@ -12,27 +12,27 @@ namespace Bogosoft.Xml.Tests
     {
         static void Validate(XmlElement element, Address address)
         {
-            element.Name.ShouldEqual("address");
+            element.Name.ShouldBe("address");
 
-            element.ChildNodes.Count.ShouldEqual(3);
+            element.ChildNodes.Count.ShouldBe(3);
 
-            element.ChildNodes[0].Name.ShouldEqual("city");
+            element.ChildNodes[0].Name.ShouldBe("city");
 
-            element.ChildNodes[0].ChildNodes.Count.ShouldEqual(1);
+            element.ChildNodes[0].ChildNodes.Count.ShouldBe(1);
 
-            element.ChildNodes[0].ChildNodes[0].InnerText.ShouldEqual(address.City);
+            element.ChildNodes[0].ChildNodes[0].InnerText.ShouldBe(address.City);
 
-            element.ChildNodes[1].Name.ShouldEqual("postal-code");
+            element.ChildNodes[1].Name.ShouldBe("postal-code");
 
-            element.ChildNodes[1].ChildNodes.Count.ShouldEqual(1);
+            element.ChildNodes[1].ChildNodes.Count.ShouldBe(1);
 
-            element.ChildNodes[1].ChildNodes[0].InnerText.ShouldEqual(address.PostalCode);
+            element.ChildNodes[1].ChildNodes[0].InnerText.ShouldBe(address.PostalCode);
 
-            element.ChildNodes[2].Name.ShouldEqual("region");
+            element.ChildNodes[2].Name.ShouldBe("region");
 
-            element.ChildNodes[2].ChildNodes.Count.ShouldEqual(1);
+            element.ChildNodes[2].ChildNodes.Count.ShouldBe(1);
 
-            element.ChildNodes[2].ChildNodes[0].InnerText.ShouldEqual(address.Region);
+            element.ChildNodes[2].ChildNodes[0].InnerText.ShouldBe(address.Region);
         }
 
         class Address : IXmlSerializable
@@ -80,13 +80,13 @@ namespace Bogosoft.Xml.Tests
 
             var serialized = new XmlSerializableSerializer().Serialize(address);
 
-            serialized.ShouldBeType<XmlDocument>();
+            serialized.ShouldBeOfType<XmlDocument>();
 
             var document = serialized as XmlDocument;
 
-            document.ChildNodes.Count.ShouldEqual(2);
+            document.ChildNodes.Count.ShouldBe(2);
 
-            document.ChildNodes[1].NodeType.ShouldEqual(XmlNodeType.Element);
+            document.ChildNodes[1].NodeType.ShouldBe(XmlNodeType.Element);
 
             Validate(document.ChildNodes[1] as XmlElement, address);
         }
@@ -100,9 +100,9 @@ namespace Bogosoft.Xml.Tests
 
             new XmlSerializableSerializer().Serialize(address, document);
 
-            document.ChildNodes.Count.ShouldEqual(2);
+            document.ChildNodes.Count.ShouldBe(2);
 
-            document.ChildNodes[1].NodeType.ShouldEqual(XmlNodeType.Element);
+            document.ChildNodes[1].NodeType.ShouldBe(XmlNodeType.Element);
 
             Validate(document.ChildNodes[1] as XmlElement, address);
         }
